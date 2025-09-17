@@ -7,9 +7,8 @@
 //#include "blackjack-client.h"
 //non ancora riscritto quindi non esistente
 
-//sistemare i define, forse nel file da includere comune
 
-int StartMenu()
+RESULT StartMenu()
 {
     struct GameMenu *menu = GameMenu_init();
 

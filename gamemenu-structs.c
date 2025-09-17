@@ -4,15 +4,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "blackjack-include.h"
 #include "gamemenu-structs.h"
-//temporaneo per via della necessità della struct all'interno
 
-#define BUTTON_AMOUNT 3
-#define TEXT_BUFF_SIZE 65
-#define WINDOW_WIDTH 625
-#define WINDOW_HEIGHT 1200
-#define RL_INPUT_AMOUNT 2
-#define RL_BUTTON_AMOUNT 2
 
 struct GameMenu
 {
@@ -25,7 +19,7 @@ struct GameMenu
     bool registerPressed;
     bool buttonCollision;
 
-    int onlineMode;
+    RESULT isOnline;
     int moneyValue;
 
     char *moneyText;
@@ -75,7 +69,7 @@ struct GameMenu* GameMenu_init()
     menu->loginPressed = false;
     menu->registerPressed = false;
     menu->cursorCollisionWithButtons = false;
-    menu->onlineMode = 0;
+    menu->isOnline = FAIL;
     menu->moneyValue = 0;
     menu->moneyText = "";
     menu->titleFont = LoadFontEx("JqkasWild-w1YD6.ttf", 128, 0, 250);
@@ -146,15 +140,6 @@ struct GameMenu* GameMenu_init()
         menu->loginMenu->ButtonArray[i].y = WINDOW_HEIGHT * 0.75f;
         menu->loginMenu->ButtonArray[i].width = WINDOW_WIDTH * 0.2f;
         menu->loginMenu->ButtonArray[i].height = WINDOW_HEIGHT * 0.1f;
-    }
-
-    if (mode == REGISTER_MODE)
-    {
-        strcpy(buttonLabelText, "REGISTER");
-    }
-    else if(mode == LOGIN_MODE)
-    {
-        strcpy(buttonLabelText, "LOGIN");
     }
 
     return menu;

@@ -1,15 +1,10 @@
-typedef enum login_mode
-{
-    LOGIN_MODE = 0,
-    REGISTER_MODE
-} MODE;
-//questo enum deve essere spostato da un altra parte visto che viene usato in giro, incluso in main
-//idealmente dovrei creare un file generale per le struct usate da più parti e usare ifndef per evitare conflitti
-//non è un qualcosa che voglio fare oggi
-//ricreare onlinemode struct in futuro
+#define BUTTON_AMOUNT 3
+#define TEXT_BUFF_SIZE 65
+#define WINDOW_WIDTH 625
+#define WINDOW_HEIGHT 1200
+#define RL_INPUT_AMOUNT 2
+#define RL_BUTTON_AMOUNT 2
 
-//typedef non è usato perchè voglio modificare elementi di membri dello struct direttamente
-//allo stesso tempo voglio tenere l'header pulito
 struct GameMenu;
 
 struct GameMenu* GameMenu_init();

@@ -3,14 +3,16 @@
 #include <gamemenu.h>
 #include <gamewindow.h>
 
+#include "blackjack-include.h"
+
 int main()
 {
     InitWindow(1200, 625, "Blackjack");
     SetTargetFPS(60);
 
-    int isOnline = StartMenu(); //StartMenu returns if player is logged in or not and eventual errors
+    RESULT isOnline = StartMenu(); //StartMenu returns if player is logged in or not and eventual errors
 
-    if(isOnline == -1)
+    if(isOnline == ERROR)
     {
         exit(-1);
     }
