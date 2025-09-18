@@ -104,6 +104,61 @@ RESULT LoginRegisterInterface(MODE mode, struct GameMenu *menu)
 
         DrawTextEx(menu->defaultFontm "USERNAME", menu->loginMenu->vecUsernameLabel, 32, 5, WHITE);
         DrawTextEx(menu->defaultFont, "PASSWORD", menu->loginMenu->vecPasswordLabel, 32, 5, WHITE);
+
+        menu->loginMenu->loginRegisterButtonPressed = GuiButton(menu->loginMenu->ButtonArray[0], menu->loginMenu->buttonLabelText);
+        menu->loginMenu->backButtonPressed = GuiButton(menu->loginMenu->ButtonArray[1], "BACK");
+
+        for (int i = 0; i < RL_INPUT_AMOUNT; i++)
+        {
+            if (CheckCollisionPointRec(GetMousePosition(), menu->loginMenu->InputBoxArray[i]))
+            {
+                menu->loginMenu->inputCollision = true;
+            }
+        }
+
+        if (!(menu->loginMenu->inputCollision))
+        {
+            for (int i = 0; i < RL_BUTTON_AMOUNT; i++)
+            {
+                if (CheckCollisionPointRec(GetMousePosition(), menu->loginMenu->ButtonArray[i]))
+                {
+                    menu->loginMenu->buttonCollision = true;
+                }
+            }
+        }
+
+        if (menu->loginMenu->inputCollision)
+        {
+            SetMouseCursor(MOUSE_CURSOR_IBEAM);
+        }
+        else if (menu->loginMenu->buttonCollision)
+        {
+            SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+        }
+        else
+        {
+            SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+        }
+
+        EndDrawing();
+
+        if (menu->loginMenu->backButtonPressed)
+        {
+            return CANCEL;
+        }
+        else if (menu->loginMenu->loginRegisterButtonPressed)
+        {
+            if (mode == LOGIN_MODE)
+            {
+                RESULT serverQueryResult = serverSend("inserire messaggio da mandare al server");
+                return serverQueryResult;
+            }
+            else if (mode == REGISTER_MODE)
+            {
+                RESULT serverQueryResult = serverSend("inserire messaggio da mandare al server");
+                return serverQueryResult;
+            }
+        }
     }
 }
 

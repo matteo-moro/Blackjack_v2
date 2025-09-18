@@ -8,5 +8,6 @@ typedef enum result
 {
     FAIL = 0,
     SUCCESS,
+    CANCEL,
     ERROR = -1
 } RESULT;
