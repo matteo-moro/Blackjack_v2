@@ -150,12 +150,12 @@ RESULT LoginRegisterInterface(MODE mode, struct GameMenu *menu)
         {
             if (mode == LOGIN_MODE)
             {
-                RESULT serverQueryResult = serverSend("inserire messaggio da mandare al server");
+                int serverQueryResult = serverSend("inserire messaggio da mandare al server");
                 return serverQueryResult;
             }
             else if (mode == REGISTER_MODE)
             {
-                RESULT serverQueryResult = serverSend("inserire messaggio da mandare al server");
+                int serverQueryResult = serverSend("inserire messaggio da mandare al server");
                 return serverQueryResult;
             }
         }
