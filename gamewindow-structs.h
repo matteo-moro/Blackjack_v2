@@ -1,0 +1,11 @@
+#define BUTTON_NUMBER 5
+#define MAX_CARD_NUMBER 5
+#define NUMBER_OF_DECKS 8
+#define START_CARD_NUMBER 2
+#define BLACKJACK_SCORE 21
+#define MIN_DEALER_STAND_SCORE 17
+#define CLUBS "}"
+#define DIAMONDS "{"
+#define HEARTS "<"
+#define SPADES ">"
+#define DEFAULT_BUFLEN 20
