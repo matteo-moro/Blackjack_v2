@@ -4,8 +4,7 @@
 #include <string.h>
 
 #include "gamemenu-structs.h"
-//#include "blackjack-client.h"
-//non ancora riscritto quindi non esistente
+#include "blackjack-client.h"
 
 
 RESULT StartMenu()
@@ -77,6 +76,8 @@ RESULT StartMenu()
 
 RESULT LoginRegisterInterface(MODE mode, struct GameMenu *menu)
 {
+    char query[TEXT_BUFF_SIZE] = "";
+
     if (mode == REGISTER_MODE)
     {
         strcpy(menu->loginMenu->buttonLabelText, "REGISTER");
@@ -150,12 +151,14 @@ RESULT LoginRegisterInterface(MODE mode, struct GameMenu *menu)
         {
             if (mode == LOGIN_MODE)
             {
-                int serverQueryResult = serverSend("inserire messaggio da mandare al server");
+                //LOGIN:'<username>';'<password>'
+                RESULT serverQueryResult = serverSend(sprintf_s(query, DEFAULT_BUFLEN, "LOGIN:'%s';'%s'", menu->loginMenu->usernameString, menu->loginMenu->passwordString), NULL);
                 return serverQueryResult;
             }
             else if (mode == REGISTER_MODE)
             {
-                int serverQueryResult = serverSend("inserire messaggio da mandare al server");
+                //REGISTER:'<username>';'<password>'
+                RESULT serverQueryResult = serverSend(sprintf_s(query, DEFAULT_BUFLEN, "REGISTER:'%s';'%s'", menu->loginMenu->usernameString, menu->loginMenu->passwordString), NULL);
                 return serverQueryResult;
             }
         }

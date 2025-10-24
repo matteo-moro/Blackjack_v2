@@ -14,22 +14,16 @@
 #define DEFAULT_PORT "27015"
 #define DEFAULT_BUFLEN 128
 
-//uso variabili globali per non creare nuove variabili ogni volta che mando un query
-//TODO: generalizzare la libreria per avere qualcosa di riusabile
 
-//rimuovere i valori globali e renderli static all'interno della funzione
-//creare un parser per recuperare i dati dal valore di ritorno del server
-
-WSADATA wsaData;
-int iResult;
-struct addrinfo *result = NULL, *ptr = NULL, hints;
-SOCKET ConnectSocket;
-char recvbuf[DEFAULT_BUFLEN] = "";
-int initResult;
-
-
-RESULT serverSend(char query[])
+RESULT serverSend(char query[], char result_arr[])
 {
+    static WSADATA wsaData;
+    static int iResult;
+    static struct addrinfo *result = NULL, *ptr = NULL, hints;
+    static SOCKET ConnectSocket;
+    static char recvbuf[DEFAULT_BUFLEN] = "";
+    static char recvbuf[DEFAULT_BUFLEN] = "";
+
     iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
 
     if (iResult != 0)
@@ -106,6 +100,41 @@ RESULT serverSend(char query[])
     {
         printf("server connection closed without warning\n");
         return ERROR;
+    }
+
+    iResult = send(ConnectSocket, query, DEFAULT_BUFLEN, 0);
+
+    if (iResult == SOCKET_ERROR)
+    {
+        printf("send failed: %d\n", WSAGetLastError());
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return ERROR;
+    }
+
+    iResult = recv(ConnectSocket, recvbuf, DEFAULT_BUFLEN, 0);
+
+    if (strcmp(recvbuf, "FAIL") != 0)
+    {
+        printf("execution successful\n");
+
+        iResult = shutdown(ConnectSocket, SD_SEND);
+
+        if (iResult == SOCKET_ERROR)
+        {
+            printf("shutdown failed: %d\n", WSAGetLastError());
+            closesocket(ConnectSocket);
+            WSACleanuo();
+            return ERROR;
+        }
+
+        closesocket(ConnectSocket);
+        WSACleanup();
+        if (result_arr != NULL)
+        {
+            strcpy(result_arr, recvbuf);
+        }
+        return SUCCESS;
     }
 }
 

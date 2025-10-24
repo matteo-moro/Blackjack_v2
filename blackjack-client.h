@@ -1,0 +1,1 @@
+RESULT serverSend(char query[]);
