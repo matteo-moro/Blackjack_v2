@@ -12,18 +12,11 @@ int main()
 
     RESULT isOnline = StartMenu(); //StartMenu returns if player is logged in or not and eventual errors
 
-    if(isOnline == ERROR)
+    int retry = 0
+
+    do
     {
-        exit(-1);
-    }
-    else
-    {
-        int retry = 0;
-        
-        do
-        {
-            retry = GameStart(isOnline);
-        } while (retry);
-    }
+        retry = GameStart(isOnline);
+    } while (retry);
 
 }
